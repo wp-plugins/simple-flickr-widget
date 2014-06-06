@@ -36,7 +36,7 @@ Install by FTP
 
 
 == Frequently Asked Questions ==
-Do you have questions or issues with Simple Flickr Widget? [Contact Me](http://sayful.net)
+Do you have questions or issues with Simple Flickr Widget? [Ask for support](http://wordpress.org/support/plugin/simple-flickr-widget)
 
 == Screenshots ==
 1. Screenshot of Simple Flickr Widget
