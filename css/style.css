@@ -1,0 +1,4 @@
+.sis_flickr { margin: 0; padding: 0; overflow: hidden; }
+.sis_flickr li { list-style: none; float: left; margin: 5px; padding: 3px; background: #eee; -moz-box-shadow: 0 0 4px #444; -webkit-box-shadow: 0 0 2px #000; }
+.sis_flickr li img { display: block; }
+.sis_flickr li a img { border: none;}
