@@ -1,9 +1,12 @@
 <?php
 /*
 Plugin Name: Simple Flickr Widget
+Plugin URI: http://wordpress.org/plugins/display-latest-tweets/
 Description: A widget which will display your latest Flickr photos. 
-Author: Sayful Islam
 Version: 1.0
+Author: Sayful Islam
+Author URI: http://www.sayful.net
+License: GPL2
 */
 class SIS_Flickr extends WP_Widget {
 
