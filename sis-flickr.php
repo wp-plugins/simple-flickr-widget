@@ -5,39 +5,44 @@ Description: A widget which will display your latest Flickr photos.
 Author: Sayful Islam
 Version: 1.0
 */
-function sis_flickr_plugin_scripts() {
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('sis_flickrfeed_script',plugins_url( '/js/jflickrfeed.min.js' , __FILE__ ),array( 'jquery' ));
-    wp_enqueue_style('sis_main_style',plugins_url( '/css/style.css' , __FILE__ ));
-}
-add_action('widgets_init', 'sis_flickr_plugin_scripts');
-
 class SIS_Flickr extends WP_Widget {
-    
-    //Constructor.....
 
-    function SIS_Flickr() {     
-        $widget_ops = array( 'classname' => 'flickr_widget', 'description' => 'Show your favorite Flickr photos.' );
-        $this->WP_Widget( 'flickr_widget', 'Flickr Posts', $widget_ops);
+    /**
+     * Register widget with WordPress.
+     */
+    public function __construct() {
+        parent::__construct(
+            'flickr_widget', // Base ID
+            __( 'Simple Flickr Widget', 'sistweets' ), // Name
+            array( 'description' => __( 'Show your favorite Flickr photos.', 'sistweets' ), ) // Args
+        );
+
+        // Register site styles and scripts
+        add_action( 'wp_enqueue_scripts', array( $this, 'sis_flickr_plugin_scripts' ) );
     }
 
-    // Displays HTML on the front end
+    /**
+     * Front-end display of widget.
+     *
+     * @see WP_Widget::widget()
+     *
+     * @param array $args     Widget arguments.
+     * @param array $instance Saved values from database.
+     */
 
-    function widget($args, $instance) {
-        extract($args);
- 
-        $title = apply_filters('widget_title', $instance['title']);
-        $flickr_id = $instance['flickr_id'];
-        $number = absint( $instance['number'] );
-
-        if($title){
-            echo $before_title;
-            echo $title;
-            echo $after_title;
+    public function widget( $args, $instance ) {
+        $title                     = apply_filters( 'widget_title', $instance['title'] );
+        $flickr_id                  = $instance['flickr_id'];
+        $number                     = $instance['number'];
+     
+        echo $args['before_widget'];
+     
+        if ( ! empty( $title ) ) {
+            echo $args['before_title'] . $title . $args['after_title'];
         }
-
+     
         ?>
-        <ul id="flickrcbox" class="sis_flickr"></ul>
+        <ul id="flickrcbox" class="simple_flicker_widget row col-3"></ul>
         <script type="text/javascript">
             jQuery(document).ready(function(){
                 
@@ -52,15 +57,21 @@ class SIS_Flickr extends WP_Widget {
             });
         </script>
         <?php
-        
+     
+        echo $args['after_widget'];
     }
- 
-    //Creating The Form
 
-    function form($instance) {
-        $title = esc_attr($instance['title']);
-        $flickr_id = $instance['flickr_id'];
-        $number = absint($instance['number']);
+    /**
+     * Back-end widget form.
+     *
+     * @see WP_Widget::form()
+     *
+     * @param array $instance Previously saved values from database.
+     */
+    public function form( $instance ) {
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Flickr Photos', 'sistweets' );
+        $flickr_id = ! empty( $instance['flickr_id'] ) ? $instance['flickr_id'] : '';
+        $number = ! empty( $instance['number'] ) ? $instance['number'] : '';
         ?>
             <p>
                 <label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
@@ -77,22 +88,36 @@ class SIS_Flickr extends WP_Widget {
             </p>
         <?php
     }
- 
-    function update($new_instance, $old_instance) {
-        $instance=$old_instance;
- 
-        $instance['title'] = strip_tags($new_instance['title']);
-        $instance['flickr_id']=$new_instance['flickr_id'];
-        $instance['number']=$new_instance['number'];
+
+    /**
+     * Sanitize widget form values as they are saved.
+     *
+     * @see WP_Widget::update()
+     *
+     * @param array $new_instance Values just sent to be saved.
+     * @param array $old_instance Previously saved values from database.
+     *
+     * @return array Updated safe values to be saved.
+     */
+    public function update( $new_instance, $old_instance ) {
+        $instance = array();
+
+        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+        $instance['flickr_id'] = ( ! empty( $new_instance['flickr_id'] ) ) ? strip_tags( $new_instance['flickr_id'] ) : '';
+        $instance['number'] = ( ! empty( $new_instance['number'] ) ) ? strip_tags( $new_instance['number'] ) : '';
+
         return $instance;
     }
- 
-}
- 
- 
-add_action( 'widgets_init', 'rm_load_widgets' );
-function rm_load_widgets() {
-    register_widget('SIS_Flickr');
-}
+    /**
+     * Registers and enqueues widget-specific styles.
+     */
+    public function sis_flickr_plugin_scripts() {
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('sis_flickrfeed_script',plugins_url( '/js/jflickrfeed.min.js' , __FILE__ ),array( 'jquery' ));
+        wp_enqueue_style('sis_main_style',plugins_url( '/css/style.css' , __FILE__ ));
+    } // end sis_flickr_plugin_scripts
 
-$instance = wp_parse_args( (array) $instance, array('title' => 'Flickr Photos', 'number' => 5, 'flickr_id' => '') );
+} // class SIS_Flickr
+
+// register SIS_Flickr widget
+add_action( 'widgets_init', create_function( '', 'register_widget("SIS_Flickr");' ) );
