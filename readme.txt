@@ -3,7 +3,7 @@ Contributors: sayful
 Tags: flickr, photos, widget
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,6 +11,20 @@ A widget which will display your latest Flickr photos.
 
 == Description ==
 This plugin makes it easy to pull Flickr feeds and display them on your site.
+
+= Usages =
+
+After installing and activating the plugin, go to WordPress Admin >> Appearance >> Widgets
+
+Find "Simple Flickr Widget" and drug and drop this widget at which widget area you want to show it.
+
+You need Flickr ID number, To get Flickr ID number, go to your Flickr account >> photostream
+
+Now Look at you addressbar, it look like the following
+
+https://www.flickr.com/photos/937xxxx5@N02/
+
+Just copy the Flickr ID like this (937xxxx5@N02) and paste this at Flickr ID number field at widget area and set others options as your need.
 
 == Installation ==
 Installing the plugins is just like installing other WordPress plugins. If you don't know how to install plugins, please review the two options below:
@@ -44,6 +58,10 @@ Do you have questions or issues with Simple Flickr Widget? [Ask for support](htt
 
 == Changelog ==
 
+= version 1.0.1 =
+* Improved style for better display
+* Added control over number of photo for each row
+
 = version 1.0 =
 Implementation of basic functionality.
 
@@ -54,3 +72,6 @@ Implementation of basic functionality.
 == CONTACT ==
 
 [Sayful Islam](http://www.sayful.net)
+
+== Upgrade Notice ==
+Upgrade the plugin to get latest features.

@@ -22,8 +22,6 @@
 .simple_flicker_widget li {
   position: relative;
   min-height: 1px;
-  padding-right: 5px;
-  padding-left: 5px;
   float: left;
 }
 .simple_flicker_widget.col-1 li{
@@ -37,4 +35,10 @@
 }
 .simple_flicker_widget.col-4 li{
   width: 25%;
+}
+.simple_flicker_widget.col-5 li{
+  width: 20%;
+}
+.simple_flicker_widget.col-6 li{
+  width: 16.66666666%;
 }
